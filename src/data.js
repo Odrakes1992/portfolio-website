@@ -11,7 +11,7 @@ export const projects = [
     title: "Hinge will Happen",
     subtitle: "React",
     description:
-      "A website presenting a visual representation of your Hinge app data, built using React and Chart JS. Saw this on tik tok and thought yeah I could do that. ",
+      "A website presenting a visual representation of your Hinge app data, built using React and Chart JS. Saw this on tik tok and thought yeah I could do that. No data is stored because GDPR.",
     image: "https://media.giphy.com/media/WiKqkqPYYLrJxExq0d/giphy.gif",
     link: "https://hingewillhappen.herokuapp.com",
   },

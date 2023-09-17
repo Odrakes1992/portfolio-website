@@ -55,18 +55,18 @@ export default function App() {
   return (
     <>
       <NavBar />
-
       <Container>
-        <h1 style={{ fontFamily: "Silkscreen" }}>Welcome</h1>
         <Tree name="main" defaultOpen>
-          <Tree name="hello" />
-          <Tree name="subtree with children">
-            <Tree name="hello" />
+          <Tree name="hello world" />
+          <Tree name={<span>welcome to my portfolio website 👋</span>} />
+          <Tree name="subtree with some stuff">
+            <Tree name="welcome" />
             <Tree name="stuff">
-              <Tree name="projects" style={{ color: "#37ceff" }} />
-              <Tree name="child 2" style={{ color: "#37ceff" }} />
-              <Tree name="child 3" style={{ color: "#37ceff" }} />
-              <Tree name="custom content">
+              <Tree
+                name="these are some of the apps that i have built"
+                style={{ color: "#37ceff" }}
+              />
+              <Tree name="hinge will happen">
                 <div
                   style={{
                     position: "relative",
@@ -75,21 +75,25 @@ export default function App() {
                     padding: 10,
                   }}
                 >
-                  <div
+                  {/* <div
                     style={{
                       width: "100%",
                       height: "100%",
                       background: "black",
                       borderRadius: 5,
                     }}
+                  /> */}
+
+                  <img
+                    alt="gallery"
+                    src="https://media.giphy.com/media/WiKqkqPYYLrJxExq0d/giphy.gif"
                   />
                 </div>
               </Tree>
+              <Tree name="child 3" style={{ color: "#37ceff" }} />
             </Tree>
-            <Tree name="hello" />
+            <Tree name="welcome" />
           </Tree>
-          <Tree name="world" />
-          <Tree name={<span>🙀 something something</span>} />
         </Tree>
       </Container>
     </>

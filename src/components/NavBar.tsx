@@ -22,7 +22,7 @@ const NavBar = () => {
     <div className={containerStyle}>
       <div>
         <h1 className={headingStyle}>
-          Osneil Drakes <br /> Full Stack Developer{" "}
+          Osneil Drakes <br /> Full Stack Developer{""}, Film Enthusiast
         </h1>
       </div>
       <div

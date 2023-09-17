@@ -6,16 +6,19 @@ export const Container = styled("div")`
   height: 100%;
   margin: 0;
   padding: 0;
+  // padding-bottom: 30px;
   overflow: hidden;
   font-family: ui-monospace, monospace;
-  font-size: 14px;
+  font-size: 18px;
   line-height: 21px;
   --webkit-user-select: none;
   user-select: none;
   display: flex;
   align-items: center;
-  height: 100%;
   justify-content: center;
+  // position: absolute;
+  // top: 40%;
+  // left: 30%;
 `;
 
 export const Frame = styled("div")`

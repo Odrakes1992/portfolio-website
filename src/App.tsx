@@ -5,6 +5,7 @@ import useMeasure from "react-use-measure";
 import { Container, Title, Frame, Content, toggle } from "./styles";
 import * as Icons from "./icons";
 import NavBar from "./components/NavBar";
+import FlipCard from "./components/FlipCard";
 
 function usePrevious<T>(value: T) {
   const ref = useRef<T>();
@@ -66,7 +67,7 @@ export default function App() {
                 name="these are some of the apps that i have built"
                 style={{ color: "#37ceff" }}
               />
-              <Tree name="hinge will happen">
+              <Tree name="hinge will happen [React]">
                 <div
                   style={{
                     position: "relative",
@@ -83,14 +84,69 @@ export default function App() {
                       borderRadius: 5,
                     }}
                   /> */}
+                  <FlipCard />
+                  {/* <img
+                    alt="gallery"
+                    src="https://media.giphy.com/media/WiKqkqPYYLrJxExq0d/giphy.gif"
+                  /> */}
+                </div>
+              </Tree>
+              <Tree name="hinge will happen [React]">
+                <div
+                  style={{
+                    position: "relative",
+                    width: 500,
+                    height: 120,
+                    paddingTop: 10,
+                  }}
+                >
+                  <div
+                    style={{
+                      whiteSpace: "normal",
+                    }}
+                  >
+                    A{" "}
+                    <a
+                      href="https://hinge-will-happen.vercel.app"
+                      rel="noreferrer"
+                      target="_blank"
+                    >
+                      website
+                    </a>{" "}
+                    presenting a visual representation of your Hinge app data,
+                    built using React and Chart JS. Saw this on the Tik Tok and
+                    yeah I could do that. No data is stored because GDPR.
+                  </div>
 
+                  {/* <div
+                    style={{
+                      width: "100%",
+                      height: "100%",
+                      background: "black",
+                      borderRadius: 5,
+                    }}
+                  /> */}
+                </div>
+              </Tree>
+              <Tree name="hinge will happen [React]">
+                <div
+                  style={{
+                    position: "relative",
+                    width: "100%",
+                    height: 300,
+                    padding: 10,
+                  }}
+                >
                   <img
                     alt="gallery"
                     src="https://media.giphy.com/media/WiKqkqPYYLrJxExq0d/giphy.gif"
                   />
                 </div>
               </Tree>
-              <Tree name="child 3" style={{ color: "#37ceff" }} />
+              <Tree
+                name="[insert other website here]"
+                style={{ color: "#37ceff" }}
+              />
             </Tree>
             <Tree name="welcome" />
           </Tree>

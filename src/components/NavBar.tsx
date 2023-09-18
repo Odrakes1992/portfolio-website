@@ -1,4 +1,3 @@
-import React from "react";
 import { css } from "@emotion/css";
 import { FaGithubSquare, FaGithubAlt, FaGithub } from "react-icons/fa";
 import { CiLinkedin } from "react-icons/ci";
@@ -22,7 +21,8 @@ const NavBar = () => {
     <div className={containerStyle}>
       <div>
         <h1 className={headingStyle}>
-          Osneil Drakes <br /> Full Stack Developer{""}, Film Enthusiast
+          Osneil Drakes <br /> Full Stack Developer{""}, Analogue Film
+          Enthusiast
         </h1>
       </div>
       <div

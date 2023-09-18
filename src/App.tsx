@@ -1,11 +1,22 @@
 // @ts-nocheck
+import { css } from "@emotion/css";
 import React, { useRef, useState, useEffect } from "react";
 import { useSpring, a } from "@react-spring/web";
 import useMeasure from "react-use-measure";
 import { Container, Title, Frame, Content, toggle } from "./styles";
 import * as Icons from "./icons";
 import NavBar from "./components/NavBar";
-import FlipCard from "./components/FlipCard";
+
+const divStyle = css`
+  width: 100%;
+  padding-top: 10px;
+  padding-bottom: 10px;
+  @media (min-width: 630px) {
+    height: 120px;
+    position: relative;
+    width: 550px;
+  }
+`;
 
 function usePrevious<T>(value: T) {
   const ref = useRef<T>();
@@ -60,46 +71,12 @@ export default function App() {
         <Tree name="main" defaultOpen>
           <Tree name="hello world" />
           <Tree name={<span>welcome to my portfolio website 👋</span>} />
-          <Tree name="subtree with some stuff">
-            <Tree name="welcome" />
-            <Tree name="stuff">
-              <Tree
-                name="these are some of the apps that i have built"
-                style={{ color: "#37ceff" }}
-              />
+          <Tree name="click to see some really some really cool stuff">
+            {/* <Tree name="nice, keep clicking" /> */}
+            <Tree name="things I made with my bare hands">
+              <Tree name="here are some apps 👇" style={{ color: "#950808" }} />
               <Tree name="hinge will happen [React]">
-                <div
-                  style={{
-                    position: "relative",
-                    width: "100%",
-                    height: 200,
-                    padding: 10,
-                  }}
-                >
-                  {/* <div
-                    style={{
-                      width: "100%",
-                      height: "100%",
-                      background: "black",
-                      borderRadius: 5,
-                    }}
-                  /> */}
-                  <FlipCard />
-                  {/* <img
-                    alt="gallery"
-                    src="https://media.giphy.com/media/WiKqkqPYYLrJxExq0d/giphy.gif"
-                  /> */}
-                </div>
-              </Tree>
-              <Tree name="hinge will happen [React]">
-                <div
-                  style={{
-                    position: "relative",
-                    width: 500,
-                    height: 120,
-                    paddingTop: 10,
-                  }}
-                >
+                <div className={divStyle}>
                   <div
                     style={{
                       whiteSpace: "normal",
@@ -113,9 +90,10 @@ export default function App() {
                     >
                       website
                     </a>{" "}
-                    presenting a visual representation of your Hinge app data,
-                    built using React and Chart JS. Saw this on the Tik Tok and
-                    yeah I could do that. No data is stored because GDPR.
+                    showing a visual representation of your Hinge data and
+                    interactions, built using React and Chart JS. Saw this on
+                    the Tik Tok and thought yeah I could do that. No data is
+                    stored because.... GDPR.
                   </div>
 
                   {/* <div
@@ -128,7 +106,7 @@ export default function App() {
                   /> */}
                 </div>
               </Tree>
-              <Tree name="hinge will happen [React]">
+              {/* <Tree name="hinge will happen [React]">
                 <div
                   style={{
                     position: "relative",
@@ -142,13 +120,74 @@ export default function App() {
                     src="https://media.giphy.com/media/WiKqkqPYYLrJxExq0d/giphy.gif"
                   />
                 </div>
+              </Tree> */}
+              <Tree name="trade runner [Python, Django & MySql]">
+                <div className={divStyle}>
+                  <div
+                    style={{
+                      whiteSpace: "normal",
+                    }}
+                  >
+                    Built this{" "}
+                    <a
+                      href="https://github.com/Odrakes1992/CRYP-3PO"
+                      rel="noreferrer"
+                      target="_blank"
+                    >
+                      project
+                    </a>{" "}
+                    during my coding bootcamp; a crypto trading bot connected to
+                    the Binance exchange which automates the trading of
+                    cryptocurrencies in your wallet based on preset strategies.
+                  </div>
+
+                  {/* <div
+                    style={{
+                      width: "100%",
+                      height: "100%",
+                      background: "black",
+                      borderRadius: 5,
+                    }}
+                  /> */}
+                </div>
               </Tree>
-              <Tree
+              <Tree name="bouncing ball game [Javascript, HTML & Css]">
+                <div className={divStyle}>
+                  <div
+                    style={{
+                      whiteSpace: "normal",
+                    }}
+                  >
+                    This{" "}
+                    <a
+                      href="https://github.com/Odrakes1992/bouncing_ball_game"
+                      rel="noreferrer"
+                      target="_blank"
+                    >
+                      one
+                    </a>{" "}
+                    is a simple bouncing ball game, click on the canvas and a
+                    new ball should appear. I have actually coded in a bit of
+                    gravity so the balls stop to a halt after losing energy,
+                    even Bill Nye the science guy would be pleased.
+                  </div>
+
+                  {/* <div
+                    style={{
+                      width: "100%",
+                      height: "100%",
+                      background: "black",
+                      borderRadius: 5,
+                    }}
+                  /> */}
+                </div>
+              </Tree>
+              {/* <Tree
                 name="[insert other website here]"
                 style={{ color: "#37ceff" }}
-              />
+              /> */}
             </Tree>
-            <Tree name="welcome" />
+            {/* <Tree name="welcome" /> */}
           </Tree>
         </Tree>
       </Container>

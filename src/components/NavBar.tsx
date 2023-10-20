@@ -35,7 +35,7 @@ const NavBar = () => {
           className={css`
             color: black;
           `}
-          href="https://github.com/Odrakes1992/Odrakes1992"
+          href="https://github.com/Odrakes1992"
           rel="noreferrer"
           target="_blank"
         >

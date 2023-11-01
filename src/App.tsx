@@ -151,25 +151,23 @@ export default function App() {
                   /> */}
                 </div>
               </Tree>
-              <Tree name="bouncing ball game [Javascript, HTML & Css]">
+              <Tree name="studio augusto [Typescript, HTML & Css]">
                 <div className={divStyle}>
                   <div
                     style={{
                       whiteSpace: "normal",
                     }}
                   >
-                    This{" "}
+                    A{" "}
                     <a
-                      href="https://github.com/Odrakes1992/bouncing_ball_game"
+                      href="https://www.studioaugusto.com"
                       rel="noreferrer"
                       target="_blank"
                     >
-                      one
+                      website
                     </a>{" "}
-                    is a simple bouncing ball game, click on the canvas and a
-                    new ball should appear. I have actually coded in a bit of
-                    gravity so the balls stop to a halt after losing energy,
-                    even Bill Nye the science guy would be pleased.
+                    for the visual arts studio, Studio Augusto, showcasing a
+                    gallery of their beautiful and artistic shoots.
                   </div>
 
                   {/* <div

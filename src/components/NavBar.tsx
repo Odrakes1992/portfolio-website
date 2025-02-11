@@ -1,18 +1,22 @@
 import { css } from "@emotion/css";
-import { FaGithubSquare, FaGithubAlt, FaGithub } from "react-icons/fa";
-import { CiLinkedin } from "react-icons/ci";
-import { MdOutlineMarkEmailUnread } from "react-icons/md";
+import { FaGithubSquare, FaCameraRetro, FaLinkedin } from "react-icons/fa";
+import { MdEmail } from "react-icons/md";
 
 const containerStyle = css`
-  padding: 20px;
+  padding: 15px;
   user-select: none;
   display: flex;
   align-items: center;
   justify-content: space-between;
+  position: sticky;
+  top: 0;
+  background: white;
+  z-index: 1000;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
 `;
 
 const headingStyle = css`
-  font-family: Silkscreen;
+  font-family: Optima, sans-serif;
   font-size: 16px;
 `;
 
@@ -21,8 +25,7 @@ const NavBar = () => {
     <div className={containerStyle}>
       <div>
         <h1 className={headingStyle}>
-          Osneil Drakes <br /> Full Stack Developer{""}, Analogue Film
-          Enthusiast
+          Osneil Drakes : Full Stack Developer{""}, Analogue Film Enthusiast
         </h1>
       </div>
       <div
@@ -34,32 +37,61 @@ const NavBar = () => {
         <a
           className={css`
             color: black;
+            transition: transform 0.2s ease-in-out;
+
+            &:hover {
+              transform: scale(1.1);
+            }
           `}
           href="https://github.com/Odrakes1992"
           rel="noreferrer"
           target="_blank"
         >
-          <FaGithub size={"42px"} />
+          <FaGithubSquare size={"26px"} />
         </a>
         <a
           className={css`
             color: black;
+            transition: transform 0.2s ease-in-out;
+
+            &:hover {
+              transform: scale(1.1);
+            }
           `}
           href="https://www.linkedin.com/in/osneil-drakes-cta-07909068/"
           rel="noreferrer"
           target="_blank"
         >
-          <CiLinkedin size={"42px"} />
+          <FaLinkedin size={"26px"} />
         </a>
         <a
           className={css`
             color: black;
+            transition: transform 0.2s ease-in-out;
+
+            &:hover {
+              transform: scale(1.1);
+            }
+          `}
+          href="/photos"
+          rel="noreferrer"
+        >
+          <FaCameraRetro size={"26px"} />
+        </a>
+        <a
+          className={css`
+            color: black;
+            transition: transform 0.2s ease-in-out;
+
+            &:hover {
+              transform: scale(1.1);
+            }
           `}
           href="mailto:osneil-drakes@hotmail.com"
           rel="noreferrer"
           target="_blank"
         >
-          <MdOutlineMarkEmailUnread size={"42px"} />
+          <MdEmail size={"26px"} />
         </a>
       </div>
     </div>

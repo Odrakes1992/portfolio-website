@@ -1,18 +1,20 @@
+import * as Icons from "../icons";
+
+import { Container, Content, Frame, Title, toggle } from "../styles";
+import React, { useEffect, useRef, useState } from "react";
+import { a, useSpring } from "@react-spring/web";
+
+import { NavBar } from "../components";
 // @ts-nocheck
 import { css } from "@emotion/css";
-import React, { useRef, useState, useEffect } from "react";
-import { useSpring, a } from "@react-spring/web";
 import useMeasure from "react-use-measure";
-import { Container, Title, Frame, Content, toggle } from "../styles";
-import * as Icons from "../icons";
-import { NavBar } from "../components";
 
 const divStyle = css`
   width: 100%;
   padding-top: 10px;
   padding-bottom: 10px;
   @media (min-width: 630px) {
-    height: 120px;
+    height: 140px;
     position: relative;
     width: 550px;
   }
@@ -106,6 +108,37 @@ export default function Home() {
                   /> */}
                 </div>
               </Tree>
+              <Tree name="government information filing tool [Typescript, Python, FastApi, Xml]">
+                <div className={divStyle}>
+                  <div
+                    style={{
+                      whiteSpace: "normal",
+                    }}
+                  >
+                    A{" "}
+                    <a
+                      href="https://government-information-filing-tool.vercel.app"
+                      rel="noreferrer"
+                      target="_blank"
+                    >
+                      platform
+                    </a>{" "}
+                    built to replace HMRC shutting down their own corporate
+                    accounts submission system. Didn't fancy paying for an
+                    alternative so built one instead. God bless everyone who
+                    ever had to work with xml and ixbrl because that has been
+                    painful as hell.
+                  </div>
+                  {/* <div
+                    style={{
+                      width: "100%",
+                      height: "100%",
+                      background: "black",
+                      borderRadius: 5,
+                    }}
+                  /> */}
+                </div>
+              </Tree>
               {/* <Tree name="hinge will happen [React]">
                 <div
                   style={{
@@ -140,15 +173,6 @@ export default function Home() {
                     the Binance exchange which automates the trading of
                     cryptocurrencies in your wallet based on preset strategies.
                   </div>
-
-                  {/* <div
-                    style={{
-                      width: "100%",
-                      height: "100%",
-                      background: "black",
-                      borderRadius: 5,
-                    }}
-                  /> */}
                 </div>
               </Tree>
               <Tree name="studio augusto [Typescript, HTML & Css]">
@@ -169,23 +193,31 @@ export default function Home() {
                     for the visual arts studio, Studio Augusto, showcasing a
                     gallery of their beautiful and artistic shoots.
                   </div>
-
-                  {/* <div
-                    style={{
-                      width: "100%",
-                      height: "100%",
-                      background: "black",
-                      borderRadius: 5,
-                    }}
-                  /> */}
                 </div>
               </Tree>
-              {/* <Tree
-                name="[insert other website here]"
-                style={{ color: "#37ceff" }}
-              /> */}
+              <Tree name="otis tax [Typescript, Node.js]">
+                <div className={divStyle}>
+                  <div
+                    style={{
+                      whiteSpace: "normal",
+                    }}
+                  >
+                    Built this{" "}
+                    <a
+                      href="https://otistax.co.uk"
+                      rel="noreferrer"
+                      target="_blank"
+                    >
+                      platform
+                    </a>{" "}
+                    for mtd (making tax digital for non tax folks), allowing
+                    users to submit returns directly to HMRC. NodeJs backend
+                    deployed on render and next on vercel with some oauth
+                    sprinkled in.
+                  </div>
+                </div>
+              </Tree>
             </Tree>
-            {/* <Tree name="welcome" /> */}
           </Tree>
         </Tree>
       </Container>

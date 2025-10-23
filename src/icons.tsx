@@ -1,6 +1,6 @@
 import * as React from "react";
 
-const MinusSquareO: React.FC = (props) => (
+const MinusSquareO: React.FC<React.SVGProps<SVGSVGElement>> = (props) => (
   <svg {...props} viewBox="64 -65 897 897">
     <g>
       <path
@@ -11,7 +11,7 @@ const MinusSquareO: React.FC = (props) => (
   </svg>
 );
 
-const PlusSquareO: React.FC = (props) => (
+const PlusSquareO: React.FC<React.SVGProps<SVGSVGElement>> = (props) => (
   <svg {...props} viewBox="64 -65 897 897">
     <g>
       <path
@@ -22,7 +22,7 @@ const PlusSquareO: React.FC = (props) => (
   </svg>
 );
 
-const CloseSquareO: React.FC = (props) => (
+const CloseSquareO: React.FC<React.SVGProps<SVGSVGElement>> = (props) => (
   <svg {...props} viewBox="64 -65 897 897">
     <g>
       <path

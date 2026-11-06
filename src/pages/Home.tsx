@@ -1,47 +1,39 @@
 import * as Icons from "../icons";
 
-import { Container, Content, Frame, Title, toggle } from "../styles";
-import React, {
-  createContext,
-  useContext,
-  useEffect,
-  useRef,
-  useState,
-} from "react";
-import { a, useSpring } from "@react-spring/web";
+import {
+  AnimatePresence as FMAnimatePresence,
+  AnimatePresenceProps,
+  MotionConfig,
+  Variants,
+  motion,
+} from "framer-motion";
+import { Container, Content, Frame, Row, Tech, Title, toggle } from "../styles";
+import React, { createContext, useContext, useReducer, useState } from "react";
 
 import { NavBar } from "../components";
 import { css } from "@emotion/css";
-import useMeasure from "react-use-measure";
+
+// TS < 5.1 rejects components typed as returning `undefined`; re-type it.
+const AnimatePresence = FMAnimatePresence as unknown as React.FC<
+  React.PropsWithChildren<AnimatePresenceProps>
+>;
 
 const divStyle = css`
   width: 100%;
   padding-top: 10px;
   padding-bottom: 10px;
+  white-space: normal;
   @media (min-width: 630px) {
     position: relative;
     width: 550px;
   }
 `;
 
-function usePrevious<T>(value: T) {
-  const ref = useRef<T>();
-  useEffect(() => void (ref.current = value), [value]);
-  return ref.current;
-}
-
-// Context for managing single open tree
-interface TreeContextType {
-  openTree: string | null;
-  setOpenTree: (id: string | null) => void;
-}
-
-const TreeContext = createContext<TreeContextType | null>(null);
-
 // Project data
 const projects = [
   {
-    name: "hinge will happen [React]",
+    name: "hinge will happen",
+    tech: "React",
     description: (
       <>
         A{" "}
@@ -59,7 +51,8 @@ const projects = [
     ),
   },
   {
-    name: "government information filing tool [Typescript, Python, FastApi, Xml]",
+    name: "government information filing tool",
+    tech: "Typescript, Python, FastApi, Xml",
     description: (
       <>
         A{" "}
@@ -78,7 +71,8 @@ const projects = [
     ),
   },
   {
-    name: "trade runner [Python, Django & MySql]",
+    name: "trade runner",
+    tech: "Python, Django & MySql",
     description: (
       <>
         Built this{" "}
@@ -96,7 +90,8 @@ const projects = [
     ),
   },
   {
-    name: "studio augusto [Typescript, HTML & Css]",
+    name: "studio augusto",
+    tech: "Typescript, HTML & Css",
     description: (
       <>
         A{" "}
@@ -113,7 +108,8 @@ const projects = [
     ),
   },
   {
-    name: "otis tax [Typescript, Node.js]",
+    name: "otis tax",
+    tech: "Typescript, Node.js",
     description: (
       <>
         Built this{" "}
@@ -128,125 +124,183 @@ const projects = [
   },
 ];
 
-interface TreeProps extends React.HTMLAttributes<HTMLDivElement> {
+// The tree is centred, so its width changing (a row opening or finishing
+// closing) shifts it sideways. A layout animation smooths that out, but it
+// only runs when the wrapper re-renders — so trees "nudge" it whenever their
+// size is about to change.
+const LayoutNudge = createContext<() => void>(() => {});
+
+const layoutTransition = { type: "spring", bounce: 0, duration: 0.4 } as const;
+
+// Height animates to "auto" natively in framer-motion — no measuring needed.
+// Children stagger in on open and out (in reverse) on close.
+const contentVariants: Variants = {
+  open: {
+    height: "auto",
+    opacity: 1,
+    transition: {
+      height: { type: "spring", bounce: 0, duration: 0.4 },
+      opacity: { duration: 0.2 },
+      staggerChildren: 0.05,
+      delayChildren: 0.05,
+    },
+  },
+  closed: {
+    height: 0,
+    opacity: 0,
+    transition: {
+      height: { type: "spring", bounce: 0, duration: 0.3 },
+      opacity: { duration: 0.2 },
+      staggerChildren: 0.02,
+      staggerDirection: -1,
+    },
+  },
+};
+
+// Each row inherits "open"/"closed" from its parent Content.
+const rowVariants: Variants = {
+  open: { opacity: 1, x: 0 },
+  closed: { opacity: 0, x: -8 },
+};
+
+interface TreeProps {
+  name: React.ReactNode;
+  tech?: string;
+  children?: React.ReactNode;
+  style?: React.CSSProperties;
   defaultOpen?: boolean;
-  name: string | JSX.Element;
-  id?: string;
+  /** Pass isOpen + onToggle to control the tree from a parent. */
+  isOpen?: boolean;
+  onToggle?: () => void;
 }
 
-const Tree = React.memo<TreeProps>(
-  ({ children, name, style, defaultOpen = false, id }) => {
-    const [isOpen, setOpen] = useState(defaultOpen);
-    const previous = usePrevious(isOpen);
-    const [ref, { height: viewHeight }] = useMeasure({
-      scroll: false,
-      debounce: { scroll: 0, resize: 0 },
-    });
-    const context = useContext(TreeContext);
+const Tree: React.FC<TreeProps> = ({
+  children,
+  name,
+  tech,
+  style,
+  defaultOpen = false,
+  isOpen,
+  onToggle,
+}) => {
+  const [localOpen, setLocalOpen] = useState(defaultOpen);
+  const open = isOpen ?? localOpen;
+  const toggleOpen = onToggle ?? (() => setLocalOpen((o) => !o));
+  const expandable = children != null;
+  const nudgeLayout = useContext(LayoutNudge);
 
-    // Handle exclusive opening for siblings
-    useEffect(() => {
-      if (context && id && isOpen) {
-        context.setOpenTree(id);
-      }
-    }, [isOpen, id, context]);
+  const handleClick = () => {
+    toggleOpen();
+    nudgeLayout();
+  };
 
-    useEffect(() => {
-      if (
-        context &&
-        id &&
-        context.openTree !== id &&
-        context.openTree !== null
-      ) {
-        setOpen(false);
-      }
-    }, [context?.openTree, id, context]);
+  const Icon = !expandable
+    ? Icons.CloseSquareO
+    : open
+      ? Icons.MinusSquareO
+      : Icons.PlusSquareO;
 
-    const { height, opacity, y } = useSpring({
-      from: { height: 0, opacity: 0, y: 0 },
-      to: {
-        height: isOpen ? viewHeight : 0,
-        opacity: isOpen ? 1 : 0,
-        y: isOpen ? 0 : 10,
-      },
-      config: {
-        mass: 1,
-        tension: 280,
-        friction: 36,
-        clamp: false,
-        precision: 0.01,
-      },
-      immediate: false,
-    });
+  const label = (
+    <>
+      <motion.span
+        style={{ display: "inline-flex" }}
+        animate={{ rotate: open ? 180 : 0 }}
+        whileTap={expandable ? { scale: 0.85 } : undefined}
+        transition={{ type: "spring", stiffness: 400, damping: 25 }}
+      >
+        <Icon style={{ ...toggle, opacity: expandable ? 1 : 0.3 }} />
+      </motion.span>
+      <Title data-title style={style}>
+        {name}
+        {tech && <Tech>[{tech}]</Tech>}
+      </Title>
+    </>
+  );
 
-    // @ts-ignore
-    const Icon =
-      Icons[`${children ? (isOpen ? "Minus" : "Plus") : "Close"}SquareO`];
-
-    return (
-      <Frame>
-        <Icon
-          style={{ ...toggle, opacity: children ? 1 : 0.3 }}
-          onClick={() => setOpen(!isOpen)}
-        />
-        <Title style={style}>{name}</Title>
-        <Content
-          style={{
-            opacity,
-            height: isOpen && previous === isOpen ? "auto" : height,
-            willChange: "height, opacity",
-          }}
+  return (
+    <Frame variants={rowVariants}>
+      {expandable ? (
+        <Row
+          as="button"
+          type="button"
+          aria-expanded={open}
+          onClick={handleClick}
         >
-          <a.div
-            ref={ref}
-            style={{ y, willChange: "transform" }}
-            children={children}
-          />
-        </Content>
-      </Frame>
-    );
-  }
-);
+          {label}
+        </Row>
+      ) : (
+        <Row>{label}</Row>
+      )}
+      <AnimatePresence initial={false} onExitComplete={nudgeLayout}>
+        {open && expandable && (
+          <Content
+            key="content"
+            variants={contentVariants}
+            initial="closed"
+            animate="open"
+            exit="closed"
+          >
+            {children}
+          </Content>
+        )}
+      </AnimatePresence>
+    </Frame>
+  );
+};
 
-const ProjectTree: React.FC<{
-  name: string;
-  description: React.ReactNode;
-  id: string;
-}> = ({ name, description, id }) => (
-  <Tree name={name} id={id}>
-    <div className={divStyle}>
-      <div style={{ whiteSpace: "normal" }}>{description}</div>
-    </div>
-  </Tree>
-);
-
-export default function Home() {
-  const [openTree, setOpenTree] = useState<string | null>(null);
+const ProjectList: React.FC = () => {
+  // Only one project open at a time
+  const [openProject, setOpenProject] = useState<string | null>(null);
 
   return (
     <>
+      {projects.map((project) => (
+        <Tree
+          key={project.name}
+          name={project.name}
+          tech={project.tech}
+          isOpen={openProject === project.name}
+          onToggle={() =>
+            setOpenProject((current) =>
+              current === project.name ? null : project.name,
+            )
+          }
+        >
+          <motion.div variants={rowVariants} className={divStyle}>
+            {project.description}
+          </motion.div>
+        </Tree>
+      ))}
+    </>
+  );
+};
+
+export default function Home() {
+  const [, nudgeLayout] = useReducer((n: number) => n + 1, 0);
+
+  return (
+    // Respects the OS "reduce motion" setting
+    <MotionConfig reducedMotion="user">
       <NavBar />
       <Container>
-        <Tree name="main" defaultOpen>
-          <Tree name="hello world" />
-          <Tree name={<span>welcome to my portfolio website 👋</span>} />
-          <Tree name="click to see some really some really cool stuff">
-            <Tree name="things I made with my bare hands">
-              <Tree name="here are some apps 👇" style={{ color: "#950808" }} />
-              <TreeContext.Provider value={{ openTree, setOpenTree }}>
-                {projects.map((project, index) => (
-                  <ProjectTree
-                    key={index}
-                    id={`project-${index}`}
-                    name={project.name}
-                    description={project.description}
+        <LayoutNudge.Provider value={nudgeLayout}>
+          <motion.div layout="position" transition={layoutTransition}>
+            <Tree name="main" defaultOpen>
+              <Tree name="hello world" />
+              <Tree name={<span>welcome to my portfolio website 👋</span>} />
+              <Tree name="click to see some really some really cool stuff">
+                <Tree name="things I made with my bare hands" defaultOpen>
+                  <Tree
+                    name="here are some apps 👇"
+                    style={{ color: "#950808" }}
                   />
-                ))}
-              </TreeContext.Provider>
+                  <ProjectList />
+                </Tree>
+              </Tree>
             </Tree>
-          </Tree>
-        </Tree>
+          </motion.div>
+        </LayoutNudge.Provider>
       </Container>
-    </>
+    </MotionConfig>
   );
 }

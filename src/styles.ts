@@ -1,5 +1,5 @@
 import styled from "styled-components";
-import { animated } from "@react-spring/web";
+import { motion } from "framer-motion";
 
 export const Container = styled("div")`
   padding: 20px;
@@ -12,7 +12,7 @@ export const Container = styled("div")`
   overflow: hidden;
   font-family: ui-monospace, monospace;
   line-height: 21px;
-  --webkit-user-select: none;
+  -webkit-user-select: none;
   user-select: none;
   display: flex;
   align-items: center;
@@ -22,8 +22,10 @@ export const Container = styled("div")`
   }
 `;
 
-export const Frame = styled("div")`
+export const Frame = styled(motion.div)`
   white-space: normal;
+  color: #24292e;
+  fill: #24292e;
 
   @media (min-width: 630px) {
     position: relative;
@@ -32,20 +34,54 @@ export const Frame = styled("div")`
     white-space: nowrap;
     overflow-x: hidden;
     vertical-align: middle;
-    color: #24292e;
-    fill: #24292e;
+  }
+`;
+
+// Shared look for both clickable (button) and static (span) rows
+export const Row = styled("span")`
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  max-width: 100%;
+  padding: 0;
+  border: 0;
+  background: none;
+  font: inherit;
+  color: inherit;
+  text-align: left;
+
+  &[aria-expanded] {
+    cursor: pointer;
+  }
+
+  &[aria-expanded]:hover span[data-title] {
+    text-decoration: underline;
+    text-decoration-style: dotted;
+    text-underline-offset: 4px;
+  }
+
+  &:focus-visible {
+    outline: 2px solid #950808;
+    outline-offset: 2px;
+    border-radius: 2px;
   }
 `;
 
 export const Title = styled("span")`
   vertical-align: middle;
+  overflow: hidden;
+  text-overflow: ellipsis;
 `;
 
-export const Content = styled(animated.div)`
-  border-left: 1px dashed rgba(255, 255, 255, 0.4);
+export const Tech = styled("span")`
+  opacity: 0.45;
+  margin-left: 0.5em;
+`;
+
+export const Content = styled(motion.div)`
+  border-left: 1px dashed rgba(36, 41, 46, 0.25);
   margin-left: 6px;
   overflow: hidden;
-  will-change: transform, opacity, height;
 
   @media (min-width: 450px) {
     padding: 0px 0px 0px 14px;
@@ -55,7 +91,6 @@ export const Content = styled(animated.div)`
 export const toggle = {
   width: "1em",
   height: "1em",
-  marginRight: 10,
-  cursor: "pointer",
+  flexShrink: 0,
   verticalAlign: "middle",
 };
